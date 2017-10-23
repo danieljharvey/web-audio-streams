@@ -1,0 +1,9 @@
+# OSX files
+.DS_Store
+
+# generated js
+main.bundle.js
+main.bundle.js.map
+
+# node
+node_modules/
