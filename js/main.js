@@ -1,8 +1,9 @@
 const Rx = require('rxjs/Rx')
 
 const rxCore = require('./src/rxCore')
+const audioCore = require('./src/audioCore')
 
-console.log("horse")
+console.log("horse2")
 
 const button = document.querySelector('button');
 
@@ -34,3 +35,8 @@ subject.throttleTime(wait)
 
 observable.zip(subject)
 		  .subscribe(egg => console.log('egg', egg));
+
+const s = setTimeout(() => {
+	audioCore.startAudio();	
+},1000)
+
