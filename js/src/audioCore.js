@@ -16,8 +16,7 @@ const createLimiter = audioCtx => {
 const createOscillator = (audioCtx) => (output) => {
   const oscillator = audioCtx.createOscillator()
   oscillator.connect(output)
-  oscillator.type = 'sine';
-  oscillator.frequency.value = 440; // value in hertz
+  oscillator.type = 'sine'
   return oscillator
 }
 
@@ -36,6 +35,19 @@ const createNoiseOsc = (audioCtx) => (output) => {
   return node
 }
 
+const setPitch = oscillator => freq => {
+  oscillator.frequency.value = freq
+  return oscillator
+}
+
+const setSlidingPitch = oscillator => freq => time => {
+  oscillator.frequency.linearRampToValueAtTime(
+    freq,
+    time
+  );
+  return oscillator
+}
+
 const startAudio = () => {
   
   console.log('startAudio');
@@ -52,11 +64,15 @@ const startAudio = () => {
   // create Noise node
   const noiseOsc = createNoiseOsc(audioCtx)(limiter)
 
+  const freqOsc = setPitch(oscillator)(440)
+  
+  const slideOsc = setSlidingPitch(freqOsc)(880)(audioCtx.currentTime + 0.1)
+  
   oscillator.start();
-  oscillator.stop(audioCtx.currentTime + 2);
+  oscillator.stop(audioCtx.currentTime + 0.1)
 
   noiseOsc.start()
-  noiseOsc.stop(audioCtx.currentTime + 1)
+  noiseOsc.stop(audioCtx.currentTime + 0.1)
 }
 
 module.exports = {
